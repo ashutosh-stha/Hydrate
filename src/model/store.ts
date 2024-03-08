@@ -1,6 +1,6 @@
-import loadingPlugin, {ExtraModelsFromLoading} from '@rematch/loading';
-import {RootModel, models} from './models';
-import {RematchDispatch, RematchRootState, init} from '@rematch/core';
+import loadingPlugin, { ExtraModelsFromLoading } from '@rematch/loading';
+import { RootModel, models } from './models';
+import { RematchDispatch, RematchRootState, init } from '@rematch/core';
 
 type FullModel = ExtraModelsFromLoading<RootModel>;
 

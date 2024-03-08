@@ -1,6 +1,6 @@
-import {createModel} from '@rematch/core';
+import { createModel } from '@rematch/core';
 import ApiService from '../../controller/ApiService';
-import {RootModel} from '../models';
+import { RootModel } from '../models';
 
 const BASE_URL = 'https://www.google.com';
 
@@ -16,7 +16,8 @@ export const httpClient = createModel<RootModel>()({
   state: initialState,
   reducers: {
     setApiSerivce(state, payload) {
-      return {...state, apiService: payload};
+      console.log('Http Initiallized');
+      return { ...state, apiService: payload };
     },
   },
   effects: dispatch => ({

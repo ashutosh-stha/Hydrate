@@ -1,11 +1,39 @@
-import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import Geolocation from '@react-native-community/geolocation';
+import React, { useEffect } from 'react';
+import { Button, Platform, StyleSheet, Text } from 'react-native';
+import { PERMISSIONS, request } from 'react-native-permissions';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+const LOCATIONS_PERMISSION = Platform.select({
+  ios: PERMISSIONS.IOS.LOCATION_ALWAYS,
+  android: PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
+  default: PERMISSIONS.IOS.LOCATION_ALWAYS,
+});
 
 export const HomeScreen = () => {
+  const getLocation = () => {
+    Geolocation.getCurrentPosition(
+      (locationInfo: any) => {
+        console.log('location Info', Platform.OS, locationInfo);
+      },
+      (error: any) => {
+        console.log('Error retrieving location', error);
+      },
+      {
+        timeout: 60 * 60 * 100,
+      },
+    );
+  };
+  useEffect(() => {
+    request(LOCATIONS_PERMISSION);
+    getLocation();
+  }, []);
+
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text>Home Screen</Text>
-    </View>
+      <Button onPress={getLocation} title="Get Location" />
+    </SafeAreaView>
   );
 };
 
@@ -13,5 +41,6 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
+    flex: 1,
   },
 });
