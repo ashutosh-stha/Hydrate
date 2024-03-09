@@ -13,12 +13,8 @@ const LOCATIONS_PERMISSION = Platform.select({
 export const HomeScreen = () => {
   const getLocation = () => {
     Geolocation.getCurrentPosition(
-      (locationInfo: any) => {
-        console.log('location Info', Platform.OS, locationInfo);
-      },
-      (error: any) => {
-        console.log('Error retrieving location', error);
-      },
+      (locationInfo: any) => {},
+      (error: any) => {},
       {
         timeout: 60 * 60 * 100,
       },

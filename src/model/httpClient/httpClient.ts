@@ -16,7 +16,6 @@ export const httpClient = createModel<RootModel>()({
   state: initialState,
   reducers: {
     setApiSerivce(state, payload) {
-      console.log('Http Initiallized');
       return { ...state, apiService: payload };
     },
   },
