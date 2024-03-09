@@ -49,7 +49,7 @@ export const UserScreen = () => {
   };
 
   const getTitle = useCallback(() => {
-    if (waterIntakeRequired) {
+    if (waterIntakeRequired && waterIntakeRequired > 0) {
       return `To stay hydrated your body needs ${waterIntakeRequired} ml of water per day.`;
     }
     return 'Please provide age, weight, and activity level for water calculation';
@@ -114,6 +114,7 @@ export const UserScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+	backgroundColor: 'white',
   },
   titleContainer: {
     paddingTop: 20,

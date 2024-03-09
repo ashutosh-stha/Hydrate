@@ -22,7 +22,11 @@ export const BottomTabNavigator = () => {
       initialRouteName={HOME_SCREEN}
       screenOptions={{
         tabBarActiveTintColor: Colors.PRIMARY_COLOR,
-        headerShown: false,
+        headerTitle: 'Hydrate',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+          fontSize: 30,
+        },
       }}>
       <BottomTab.Screen
         name={HOME_SCREEN}

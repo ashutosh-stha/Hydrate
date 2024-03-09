@@ -6,16 +6,24 @@ interface UserData {
   weight: number;
   activityLevel: number;
 }
+
+export type WaterIntake = {
+  waterIntake: number;
+  timeStamp: Date;
+};
+
 interface UserState {
   user?: UserData;
-  waterIntake?: number;
-  waterIntakeRequired?: number;
+  waterIntake: number;
+  waterIntakeRequired: number;
+  waterIntakeHistory: WaterIntake[];
 }
 
 const initialState: UserState = {
   user: undefined,
   waterIntake: 0,
   waterIntakeRequired: 0,
+  waterIntakeHistory: [],
 };
 export const user = createModel<RootModel>()({
   state: initialState,
@@ -25,6 +33,15 @@ export const user = createModel<RootModel>()({
     },
     setWaterIntakeRequired(state, payload) {
       return { ...state, waterIntakeRequired: payload };
+    },
+    setWaterIntake(state, payload) {
+      return { ...state, waterIntake: payload };
+    },
+    addWaterIntakeHistory(state, payload) {
+      return {
+        ...state,
+        waterIntakeHistory: [...state.waterIntakeHistory, payload],
+      };
     },
   },
   effects: dispatch => ({
