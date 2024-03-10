@@ -21,7 +21,7 @@ const ActivityLevels = [
 export const UserScreen = () => {
   const dispatch = useDispatch<Dispatch>();
   const waterIntakeRequired = useSelector((state: RootState) => {
-    return state.user.waterIntakeRequired;
+    return state.user?.waterIntakeRequired;
   });
   const [age, setAge] = useState<string>('');
   const [weight, setWeight] = useState<string>('');
@@ -102,6 +102,7 @@ export const UserScreen = () => {
       </KeyboardAwareScrollView>
       <KeyboardAvoidingView behavior="padding">
         <ActionButton
+          title="Calculate"
           onPress={() => {
             validateInput();
           }}
@@ -114,7 +115,7 @@ export const UserScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-	backgroundColor: 'white',
+    backgroundColor: 'white',
   },
   titleContainer: {
     paddingTop: 20,

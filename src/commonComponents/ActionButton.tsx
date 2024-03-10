@@ -8,6 +8,8 @@ export interface ActionButtonProps {
   buttonStyle?: object;
   containerStyle?: object;
   titleStyle?: object;
+  title: string;
+  type?: 'solid' | 'outline' | 'clear';
 }
 
 export const ActionButton: React.FC<ActionButtonProps> = ({
@@ -15,11 +17,14 @@ export const ActionButton: React.FC<ActionButtonProps> = ({
   buttonStyle,
   containerStyle,
   titleStyle,
+  title,
+  type,
 }) => {
   return (
     <Button
-      title="Calculate"
+      title={title}
       onPress={onPress}
+      type={type}
       containerStyle={[styles.containerStyle, containerStyle]}
       buttonStyle={[styles.buttonStyle, buttonStyle]}
       titleStyle={[styles.titleStyle, titleStyle]}

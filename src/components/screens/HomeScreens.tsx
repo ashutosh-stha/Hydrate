@@ -24,13 +24,13 @@ const WATER_INTAKE_BUTTON = [75, 100, 125, 150, 175, 200, 300, 400];
 export const HomeScreen = () => {
   const dispatch = useDispatch<Dispatch>();
   const waterGoal = useSelector(
-    (state: RootState) => state.user.waterIntakeRequired,
+    (state: RootState) => state.user?.waterIntakeRequired,
   );
   const waterIntake = useSelector((state: RootState) => {
-    return state.user.waterIntake;
+    return state.user?.waterIntake;
   });
   const waterIntakeHistory = useSelector(
-    (state: RootState) => state.user.waterIntakeHistory,
+    (state: RootState) => state.user?.waterIntakeHistory,
   );
 
   const [progress, setProgress] = useState<number>(0);
@@ -47,8 +47,8 @@ export const HomeScreen = () => {
 
   const addWaterIntake = (water: number) => {
     const intake = waterIntake + water;
-    dispatch.user.setWaterIntake(intake);
-    dispatch.user.addWaterIntakeHistory({
+    dispatch.user?.setWaterIntake(intake);
+    dispatch.user?.addWaterIntakeHistory({
       waterIntake: water,
       timeStamp: new Date(),
     });

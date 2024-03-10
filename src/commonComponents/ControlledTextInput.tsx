@@ -11,6 +11,7 @@ export interface ControlledTextInputProps {
   maxLength?: number | undefined;
   error?: boolean;
   errorMessage?: string;
+  [key: string]: any;
 }
 
 export const ControlledTextInput: React.FC<ControlledTextInputProps> = ({
@@ -21,6 +22,7 @@ export const ControlledTextInput: React.FC<ControlledTextInputProps> = ({
   maxLength,
   error,
   errorMessage,
+  ...rest
 }) => {
   return (
     <View>
@@ -33,6 +35,7 @@ export const ControlledTextInput: React.FC<ControlledTextInputProps> = ({
         keyboardType={keyboardType}
         maxLength={maxLength}
         errorMessage={error ? errorMessage : undefined}
+        {...rest}
       />
     </View>
   );

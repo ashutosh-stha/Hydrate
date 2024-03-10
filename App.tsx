@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { RootStackScreen } from './src/routes/RootStackScreen';
 import { Provider } from 'react-redux';
 import { store } from './src/model/store';
+import { navigationRef } from './src/routes/utils/NavigationService';
 
 class App extends React.Component {
   constructor(props: {} | Readonly<{}>) {
@@ -12,7 +13,7 @@ class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <NavigationContainer>
+        <NavigationContainer ref={navigationRef}>
           <RootStackScreen />
         </NavigationContainer>
       </Provider>

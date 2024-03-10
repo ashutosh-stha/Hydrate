@@ -1,20 +1,30 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import { BOTTOM_TAB_NAVIGATOR } from '../constants/Routes';
+import { BOTTOM_TAB_NAVIGATOR, LOGIN_SCREEN } from '../constants/Routes';
 import { BottomTabNavigator } from '../../components/bottomNavigator/BottomNavigator';
+import { LoginScreen } from '../../components/screens/LoginScreen';
+import { useSelector } from 'react-redux';
+import { RootModel } from '../../model/models';
 
 const MainStack = createNativeStackNavigator();
 
 export const MainStackScreens: React.FC = () => {
+  const isLoggedIn = useSelector((state: RootModel) => state.user.isLoggedIn);
   return (
-    <MainStack.Navigator initialRouteName={BOTTOM_TAB_NAVIGATOR}>
-      <MainStack.Screen
-        name={BOTTOM_TAB_NAVIGATOR}
-        component={BottomTabNavigator}
-        options={{
-          headerShown: false,
-        }}
-      />
+    <MainStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
+      {isLoggedIn ? (
+        <>
+          <MainStack.Screen
+            name={BOTTOM_TAB_NAVIGATOR}
+            component={BottomTabNavigator}
+          />
+        </>
+      ) : (
+        <MainStack.Screen name={LOGIN_SCREEN} component={LoginScreen} />
+      )}
     </MainStack.Navigator>
   );
 };
