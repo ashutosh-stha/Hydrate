@@ -1,4 +1,4 @@
-package com.hydrateapp
+package com.ashrestha.hydrate
 
 import android.app.Application
 import com.facebook.react.PackageList

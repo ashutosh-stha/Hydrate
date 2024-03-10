@@ -1,4 +1,4 @@
-package com.hydrateapp
+package com.ashrestha.hydrate 
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

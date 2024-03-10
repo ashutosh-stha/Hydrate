@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "830657401272",
+    "project_id": "hydrate-65526",
+    "storage_bucket": "hydrate-65526.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:830657401272:android:c5fde293d97256c1623f4d",
+        "android_client_info": {
+          "package_name": "com.ashrestha.hydrate"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBipGewvnAboO-J5wv1vZwjApsMekl21po"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyCuHO2fDM-QR-v6XhUT0IfYp1xKqfvjXkM</string>
+	<key>GCM_SENDER_ID</key>
+	<string>830657401272</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.ashrestha.hydrate</string>
+	<key>PROJECT_ID</key>
+	<string>hydrate-65526</string>
+	<key>STORAGE_BUCKET</key>
+	<string>hydrate-65526.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:830657401272:ios:133b08978f981314623f4d</string>
+</dict>
+</plist>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { PRIMARY_COLOR } from '../assets/colors';
+import { PRIMARY_COLOR, PRIMARY_TEXT_COLOR } from '../assets/colors';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import moment from 'moment';
 
@@ -21,7 +21,7 @@ export const HistoryItem: React.FC<HistoryItemProps> = ({
         color={PRIMARY_COLOR}
         style={styles.iconStyle}
       />
-      <Text>{`${waterIntake}ml`}</Text>
+      <Text style={styles.titleStyle}>{`${waterIntake}ml`}</Text>
       <Text style={styles.timeStampeStyle}>{`${moment(timeStamp).format(
         'HH:mm',
       )}`}</Text>
@@ -43,6 +43,9 @@ const styles = StyleSheet.create({
   },
   iconStyle: {
     marginRight: 14,
+  },
+  titleStyle: {
+    color: PRIMARY_TEXT_COLOR,
   },
   timeStampeStyle: { position: 'absolute', right: 0, marginRight: 20 },
 });
