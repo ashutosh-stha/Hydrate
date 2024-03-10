@@ -17,7 +17,6 @@ interface UserState {
   waterIntake: number;
   waterIntakeRequired: number;
   waterIntakeHistory: WaterIntake[];
-  isLoggedIn: boolean;
 }
 
 const initialState: UserState = {
@@ -25,7 +24,6 @@ const initialState: UserState = {
   waterIntake: 0,
   waterIntakeRequired: 0,
   waterIntakeHistory: [],
-  isLoggedIn: true,
 };
 export const user = createModel<RootModel>()({
   state: initialState,

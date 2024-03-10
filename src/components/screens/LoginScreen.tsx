@@ -4,17 +4,22 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { ControlledTextInput } from '../../commonComponents/ControlledTextInput';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { ActionButton } from '../../commonComponents/ActionButton';
-import { useNavigation } from '@react-navigation/native';
-import { BOTTOM_TAB_NAVIGATOR } from '../../routes/constants/Routes';
-import { GenericNavigationProps } from '../../routes/types';
+import { useDispatch } from 'react-redux';
+import { Dispatch } from '../../model/store';
 
 export const LoginScreen = () => {
+  const dispatch = useDispatch<Dispatch>();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const navigation = useNavigation<GenericNavigationProps>();
+
   const onLoginPress = () => {
-    navigation.reset({ index: 0, routes: [{ name: BOTTOM_TAB_NAVIGATOR }] });
+    dispatch.authentication.signInUserWithEmail({ email, password });
   };
+
+  const onSignUpPress = () => {
+    dispatch.authentication.createUserWithEmail({ email, password });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAwareScrollView contentContainerStyle={styles.contentContainer}>
@@ -35,6 +40,12 @@ export const LoginScreen = () => {
         <ActionButton
           title="Login"
           onPress={onLoginPress}
+          containerStyle={styles.buttonContainer}
+        />
+
+        <ActionButton
+          title="Sign Up"
+          onPress={onSignUpPress}
           containerStyle={styles.buttonContainer}
         />
       </KeyboardAwareScrollView>
@@ -62,5 +73,6 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     paddingHorizontal: 0,
+    marginBottom: 10,
   },
 });

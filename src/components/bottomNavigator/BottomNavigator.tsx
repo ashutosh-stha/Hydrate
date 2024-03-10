@@ -10,13 +10,30 @@ import { UserScreen } from '../screens/UserScreen';
 import { WeatherScreen } from '../screens/WeatherScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as Colors from '../../assets/colors';
+import { Button } from '@rneui/themed';
+import { useDispatch } from 'react-redux';
+import { Dispatch } from '../../model/store';
 
 const BottomTab = createBottomTabNavigator();
 
 export const BottomTabNavigator = () => {
+  const dispatch = useDispatch<Dispatch>();
   const tabIcon = (color: string, size: number = 20, name: string) => {
     return <MaterialCommunityIcons name={name} color={color} size={size} />;
   };
+
+  const renderLogoutButton = () => {
+    return (
+      <Button
+        title={'Logout'}
+        onPress={() => {
+          dispatch.authentication.userSignOut();
+        }}
+        type="clear"
+      />
+    );
+  };
+
   return (
     <BottomTab.Navigator
       initialRouteName={HOME_SCREEN}
@@ -27,6 +44,7 @@ export const BottomTabNavigator = () => {
           fontWeight: 'bold',
           fontSize: 30,
         },
+        headerRight: renderLogoutButton,
       }}>
       <BottomTab.Screen
         name={HOME_SCREEN}

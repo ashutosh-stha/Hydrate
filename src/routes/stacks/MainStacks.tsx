@@ -5,11 +5,14 @@ import { BottomTabNavigator } from '../../components/bottomNavigator/BottomNavig
 import { LoginScreen } from '../../components/screens/LoginScreen';
 import { useSelector } from 'react-redux';
 import { RootModel } from '../../model/models';
+import { RootState } from '../../model/store';
 
 const MainStack = createNativeStackNavigator();
 
 export const MainStackScreens: React.FC = () => {
-  const isLoggedIn = useSelector((state: RootModel) => state.user.isLoggedIn);
+  const isLoggedIn = useSelector(
+    (state: RootState) => state.authentication.isLoggedIn,
+  );
   return (
     <MainStack.Navigator
       screenOptions={{

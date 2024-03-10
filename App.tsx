@@ -8,6 +8,7 @@ import { navigationRef } from './src/routes/utils/NavigationService';
 class App extends React.Component {
   constructor(props: {} | Readonly<{}>) {
     store.dispatch.httpClient.intializeHttpClient();
+    store.dispatch.authentication.initialize();
     super(props);
   }
   render() {
