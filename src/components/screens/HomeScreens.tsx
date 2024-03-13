@@ -5,6 +5,7 @@ import {
   View,
   useWindowDimensions,
   FlatList,
+  Image,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Progress from 'react-native-progress';
@@ -18,6 +19,7 @@ import {
 } from '../../assets/colors';
 import { WaterIntake } from '../../model/user/user';
 import { HistoryItem } from '../../commonComponents/HistoryItem';
+import Images from '../../assets/images';
 
 const WATER_INTAKE_BUTTON = [75, 100, 125, 150, 175, 200];
 
@@ -42,6 +44,11 @@ export const HomeScreen = () => {
   }, [waterIntake, waterGoal]);
 
   useEffect(() => {
+    dispatch.user.resetForNewDay();
+    dispatch.user.getUserData();
+  }, [dispatch.user]);
+
+  useEffect(() => {
     calculateProgress();
   }, [calculateProgress]);
 
@@ -54,6 +61,14 @@ export const HomeScreen = () => {
     });
   };
 
+  const renderEmptyContainer = () => {
+    return (
+      <View style={styles.emptyContainer}>
+        <Image source={Images.DRINK_WATER} style={styles.drinkWaterImage} />
+        <Text style={styles.emptyText}>Drink your water</Text>
+      </View>
+    );
+  };
   const { width: deviceWidth } = useWindowDimensions();
   return (
     <SafeAreaView style={styles.container}>
@@ -91,12 +106,14 @@ export const HomeScreen = () => {
         <Text style={styles.goalStyle}>History</Text>
         <FlatList
           data={waterIntakeHistory}
+          contentContainerStyle={styles.flatListContainer}
           renderItem={({ item }: { item: WaterIntake }) => (
             <HistoryItem
               waterIntake={item.waterIntake}
               timeStamp={item.timeStamp}
             />
           )}
+          ListEmptyComponent={renderEmptyContainer}
         />
       </View>
     </SafeAreaView>
@@ -145,5 +162,22 @@ const styles = StyleSheet.create({
     width: '30%',
     borderWidth: 2,
     borderColor: PRIMARY_COLOR,
+  },
+  emptyContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  flatListContainer: {
+    flexGrow: 1,
+  },
+  emptyText: {
+    color: PRIMARY_TEXT_COLOR,
+    fontSize: 16,
+  },
+  drinkWaterImage: {
+    height: 70,
+    width: 70,
+    marginBottom: 20,
   },
 });

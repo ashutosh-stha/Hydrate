@@ -1,23 +1,39 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ControlledTextInput } from '../../commonComponents/ControlledTextInput';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { ActionButton } from '../../commonComponents/ActionButton';
-import { useDispatch } from 'react-redux';
-import { Dispatch } from '../../model/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { Dispatch, RootState } from '../../model/store';
+import { isEmpty } from 'lodash';
+import { validateEmail } from '../../utils/helperFunctions';
+import { RED_COLOR } from '../../assets/colors';
 
 export const LoginScreen = () => {
   const dispatch = useDispatch<Dispatch>();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [emailError, setEmailError] = useState<boolean>(false);
+  const [passwordError, setPasswordError] = useState<boolean>(false);
+  const invalidCredentialsMessage = useSelector((state: RootState) => {
+    return state.authentication.invalidCredentialsMessage;
+  });
 
-  const onLoginPress = () => {
-    dispatch.authentication.signInUserWithEmail({ email, password });
-  };
+  const onSignInAndSignUpPress = (isSign: boolean) => {
+    const emailErr = isEmpty(email) || !validateEmail(email);
+    const passwordErr = isEmpty(password);
+    setEmailError(emailErr);
+    setPasswordError(passwordErr);
+    if (emailErr || passwordErr) {
+      return;
+    }
 
-  const onSignUpPress = () => {
-    dispatch.authentication.createUserWithEmail({ email, password });
+    if (isSign) {
+      dispatch.authentication.signInUserWithEmail({ email, password });
+    } else {
+      dispatch.authentication.createUserWithEmail({ email, password });
+    }
   };
 
   return (
@@ -29,6 +45,8 @@ export const LoginScreen = () => {
           keyboardType="email-address"
           value={email}
           onChange={setEmail}
+          errorMessage="Enter a valid email address"
+          error={emailError}
         />
         <ControlledTextInput
           title="Password"
@@ -36,16 +54,27 @@ export const LoginScreen = () => {
           value={password}
           onChange={setPassword}
           secureTextEntry={true}
+          errorMessage="Enter password"
+          error={passwordError}
         />
+        <View style={styles.invalidContainerStyle}>
+          <Text style={styles.invalidCredentialsStyle}>
+            {invalidCredentialsMessage}
+          </Text>
+        </View>
         <ActionButton
           title="Login"
-          onPress={onLoginPress}
+          onPress={() => {
+            onSignInAndSignUpPress(true);
+          }}
           containerStyle={styles.buttonContainer}
         />
 
         <ActionButton
           title="Sign Up"
-          onPress={onSignUpPress}
+          onPress={() => {
+            onSignInAndSignUpPress(false);
+          }}
           containerStyle={styles.buttonContainer}
         />
       </KeyboardAwareScrollView>
@@ -74,5 +103,14 @@ const styles = StyleSheet.create({
   buttonContainer: {
     paddingHorizontal: 0,
     marginBottom: 10,
+  },
+  invalidContainerStyle: {
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  invalidCredentialsStyle: {
+    color: RED_COLOR,
+    alignItems: 'center',
+    fontSize: 16,
   },
 });

@@ -11,6 +11,8 @@ export interface ControlledTextInputProps {
   maxLength?: number | undefined;
   error?: boolean;
   errorMessage?: string;
+  container?: object;
+  parseValue?: any;
   [key: string]: any;
 }
 
@@ -22,15 +24,24 @@ export const ControlledTextInput: React.FC<ControlledTextInputProps> = ({
   maxLength,
   error,
   errorMessage,
+  container,
+  parseValue,
   ...rest
 }) => {
+  const onValueChange = (val: string) => {
+    if (parseValue) {
+      onChange(parseValue(val));
+    } else {
+      onChange(val);
+    }
+  };
   return (
-    <View>
+    <View style={[container]}>
       <Text style={styles.inputTitleStyle}>{title}</Text>
       <Input
         inputContainerStyle={styles.inputContainer}
         containerStyle={styles.inputStyle}
-        onChangeText={onChange}
+        onChangeText={onValueChange}
         value={value}
         keyboardType={keyboardType}
         maxLength={maxLength}

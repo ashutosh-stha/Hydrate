@@ -1,5 +1,4 @@
 import { createModel } from '@rematch/core';
-import notifee from '@notifee/react-native';
 import { RootModel } from '../models';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 

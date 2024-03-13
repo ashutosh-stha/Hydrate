@@ -2,7 +2,7 @@ import { createModel } from '@rematch/core';
 import ApiService from '../../controller/ApiService';
 import { RootModel } from '../models';
 
-const BASE_URL = 'https://www.google.com';
+const BASE_URL = 'https://api.openweathermap.org/data/3.0';
 
 interface HttpClientState {
   apiService?: ApiService;
