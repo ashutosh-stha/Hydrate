@@ -21,7 +21,7 @@ const ActivityLevels = [
 export const UserScreen = () => {
   const dispatch = useDispatch<Dispatch>();
   const waterIntakeRequired = useSelector((state: RootState) => {
-    return state.user?.waterIntakeRequired;
+    return state.user.waterIntakeRequired;
   });
   const [age, setAge] = useState<string>('');
   const [weight, setWeight] = useState<string>('');
@@ -97,6 +97,7 @@ export const UserScreen = () => {
                 );
               })}
             </View>
+            <Text>Its 16{'\u00b0'}C in San Francisco</Text>
           </View>
         </>
       </KeyboardAwareScrollView>

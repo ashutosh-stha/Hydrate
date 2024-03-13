@@ -19,12 +19,12 @@ import {
 import { WaterIntake } from '../../model/user/user';
 import { HistoryItem } from '../../commonComponents/HistoryItem';
 
-const WATER_INTAKE_BUTTON = [75, 100, 125, 150, 175, 200, 300, 400];
+const WATER_INTAKE_BUTTON = [75, 100, 125, 150, 175, 200];
 
 export const HomeScreen = () => {
   const dispatch = useDispatch<Dispatch>();
   const waterGoal = useSelector(
-    (state: RootState) => state.user?.waterIntakeRequired,
+    (state: RootState) => state.user.waterIntakeRequired,
   );
   const waterIntake = useSelector((state: RootState) => {
     return state.user?.waterIntake;

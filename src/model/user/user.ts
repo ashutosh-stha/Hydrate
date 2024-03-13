@@ -19,6 +19,8 @@ interface UserState {
   waterIntakeHistory: WaterIntake[];
 }
 
+const API_KEY = 'b2f173c9d6ea72ea21364abd12336fb8';
+
 const initialState: UserState = {
   user: undefined,
   waterIntake: 0,
@@ -40,7 +42,7 @@ export const user = createModel<RootModel>()({
     addWaterIntakeHistory(state, payload) {
       return {
         ...state,
-        waterIntakeHistory: [...state.waterIntakeHistory, payload],
+        waterIntakeHistory: [payload, ...state.waterIntakeHistory],
       };
     },
   },
@@ -50,6 +52,7 @@ export const user = createModel<RootModel>()({
       dispatch.user.setUserData(payload);
       dispatch.user.setWaterIntakeRequired(requiredWaterIntake.toFixed(0));
     },
+	getCurrentLocationWeather() {}
   }),
 });
 function calculateWaterIntakeRequired(userData: UserData): number {

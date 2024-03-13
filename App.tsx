@@ -9,6 +9,7 @@ class App extends React.Component {
   constructor(props: {} | Readonly<{}>) {
     store.dispatch.httpClient.intializeHttpClient();
     store.dispatch.authentication.initialize();
+    store.dispatch.notifications.initialize();
     super(props);
   }
   render() {
