@@ -30,9 +30,9 @@ export const ControlledTextInput: React.FC<ControlledTextInputProps> = ({
 }) => {
   const onValueChange = (val: string) => {
     if (parseValue) {
-      onChange(parseValue(val));
+      onChange(parseValue(val.trim()));
     } else {
-      onChange(val);
+      onChange(val.trim());
     }
   };
   return (

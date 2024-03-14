@@ -1,13 +1,8 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
-import {
-  HOME_SCREEN,
-  USER_SCREEN,
-  WEATHER_SCREEN,
-} from '../../routes/constants/Routes';
+import * as Routes from '../../routes/constants/Routes';
 import { HomeScreen } from '../screens/HomeScreens';
 import { UserScreen } from '../screens/UserScreen';
-import { WeatherScreen } from '../screens/WeatherScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as Colors from '../../assets/colors';
 import { Button } from '@rneui/themed';
@@ -36,7 +31,7 @@ export const BottomTabNavigator = () => {
 
   return (
     <BottomTab.Navigator
-      initialRouteName={HOME_SCREEN}
+      initialRouteName={Routes.HOME_SCREEN}
       screenOptions={{
         tabBarActiveTintColor: Colors.PRIMARY_COLOR,
         headerTitle: 'Hydrate',
@@ -47,7 +42,7 @@ export const BottomTabNavigator = () => {
         headerRight: renderLogoutButton,
       }}>
       <BottomTab.Screen
-        name={HOME_SCREEN}
+        name={Routes.HOME_SCREEN}
         component={HomeScreen}
         options={{
           tabBarLabel: 'Home',
@@ -55,20 +50,12 @@ export const BottomTabNavigator = () => {
         }}
       />
       <BottomTab.Screen
-        name={USER_SCREEN}
+        name={Routes.USER_SCREEN}
         component={UserScreen}
         options={{
           tabBarLabel: 'User',
           tabBarIcon: ({ color, size }) =>
             tabIcon(color, size, 'face-man-profile'),
-        }}
-      />
-      <BottomTab.Screen
-        name={WEATHER_SCREEN}
-        component={WeatherScreen}
-        options={{
-          tabBarLabel: 'Weather',
-          tabBarIcon: ({ color, size }) => tabIcon(color, size, 'cloud'),
         }}
       />
     </BottomTab.Navigator>

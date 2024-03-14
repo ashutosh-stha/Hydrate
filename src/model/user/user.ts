@@ -15,11 +15,20 @@ export type WaterIntake = {
   timeStamp: Date;
 };
 
+export type WeatherData = {
+  current: {
+    temp: number;
+    humidity: number;
+  };
+};
+
 interface UserState {
   user?: UserData;
   waterIntake: number;
   waterIntakeRequired: number;
   waterIntakeHistory: WaterIntake[];
+  weatherInformation: string;
+  weatherSubtitle: '';
 }
 
 const initialState: UserState = {
@@ -27,6 +36,8 @@ const initialState: UserState = {
   waterIntake: 0,
   waterIntakeRequired: 0,
   waterIntakeHistory: [],
+  weatherInformation: '',
+  weatherSubtitle: '',
 };
 export const user = createModel<RootModel>()({
   state: initialState,
@@ -45,6 +56,12 @@ export const user = createModel<RootModel>()({
         ...state,
         waterIntakeHistory: payload,
       };
+    },
+    setWeatherInformation(state, payload) {
+      return { ...state, weatherInformation: payload };
+    },
+    setWeatherSubtitle(state, payload) {
+      return { ...state, weatherSubtitle: payload };
     },
     reset() {
       return initialState;
@@ -87,9 +104,14 @@ export const user = createModel<RootModel>()({
       const response = await weather.getCurrentLocationWeather({
         lat: payload.latitude,
         lon: payload.longitude,
-        exclude: 'hourly,daily,alerts,minutely',
+        exclude: 'daily,hourly,alerts,minutely',
       });
-      console.log('Weather Response', JSON.stringify(response, null, 2));
+      if (response) {
+        const weatherString = getTemperatureText(response.current.temp);
+        let temperatureText: string = `The current temperature is ${response.current.temp}\u00b0C`;
+        dispatch.user.setWeatherInformation(temperatureText);
+        dispatch.user.setWeatherSubtitle(weatherString);
+      }
     },
     async addWaterIntakeHistory(payload, rootState) {
       const historyList = [payload, ...rootState.user.waterIntakeHistory];
@@ -128,13 +150,21 @@ export const user = createModel<RootModel>()({
 });
 
 function calculateWaterIntakeRequired(userData: UserData): number {
-  // Basic Water Requirement (BWR) formula: BWR = 30 ml/kg
   const bwrMlPerKg: number = 30;
   const basicWaterRequirement: number = bwrMlPerKg * userData.weight;
 
-  // Adjusted Water Intake: Adjusted Water Intake = BWR × Activity Factor
   const adjustedWaterIntake: number =
     basicWaterRequirement * userData.activityLevel;
 
   return adjustedWaterIntake;
+}
+
+function getTemperatureText(temperature: number): string {
+  if (temperature > 30) {
+    return 'Stay cool, drink water to beat the heat!';
+  } else if (temperature < 10) {
+    return 'Stay warm, hydrata with hot drinks!';
+  } else {
+    return 'Stay refreshed, sip water to feel energized!';
+  }
 }

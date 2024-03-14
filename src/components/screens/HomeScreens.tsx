@@ -20,22 +20,33 @@ import {
 import { WaterIntake } from '../../model/user/user';
 import { HistoryItem } from '../../commonComponents/HistoryItem';
 import Images from '../../assets/images';
+import LocationHelper, { Location } from '../../utils/LocationHelper';
+import { isEmpty } from 'lodash';
 
 const WATER_INTAKE_BUTTON = [75, 100, 125, 150, 175, 200];
 
 export const HomeScreen = () => {
   const dispatch = useDispatch<Dispatch>();
-  const waterGoal = useSelector(
-    (state: RootState) => state.user.waterIntakeRequired,
-  );
-  const waterIntake = useSelector((state: RootState) => {
-    return state.user?.waterIntake;
-  });
-  const waterIntakeHistory = useSelector(
-    (state: RootState) => state.user?.waterIntakeHistory,
-  );
+
+  const {
+    waterIntakeRequired: waterGoal,
+    waterIntake,
+    waterIntakeHistory,
+    weatherInformation,
+    weatherSubtitle,
+  } = useSelector((state: RootState) => state.user);
 
   const [progress, setProgress] = useState<number>(0);
+  const [location, setLocation] = useState<Location | undefined>();
+
+  const getLocation = async () => {
+    try {
+      const locations = await new LocationHelper().getCurrentLocation();
+      setLocation(locations);
+    } catch (e) {
+      console.log('Error retrieving location', e);
+    }
+  };
 
   const calculateProgress = useCallback(() => {
     if (waterGoal > 0) {
@@ -46,11 +57,18 @@ export const HomeScreen = () => {
   useEffect(() => {
     dispatch.user.resetForNewDay();
     dispatch.user.getUserData();
+    getLocation();
   }, [dispatch.user]);
 
   useEffect(() => {
     calculateProgress();
   }, [calculateProgress]);
+
+  useEffect(() => {
+    if (location) {
+      dispatch.user.getCurrentLocationWeather(location);
+    }
+  }, [dispatch.user, location]);
 
   const addWaterIntake = (water: number) => {
     const intake = waterIntake + water;
@@ -73,6 +91,14 @@ export const HomeScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.contentContainer}>
+        <View
+          style={[
+            styles.weatherContainer,
+            isEmpty(weatherInformation) && styles.displayNone,
+          ]}>
+          <Text style={styles.weatherText}>{weatherInformation}</Text>
+          <Text style={styles.weatherSubtitle}>{weatherSubtitle}</Text>
+        </View>
         <View style={[styles.rowDirection, styles.headerContainer]}>
           <Text style={styles.goalStyle}>{`Daily Goal: ${waterGoal}ml`}</Text>
           <Text style={styles.remainingStyle}>{`${waterIntake}ml`}</Text>
@@ -179,5 +205,22 @@ const styles = StyleSheet.create({
     height: 70,
     width: 70,
     marginBottom: 20,
+  },
+  weatherText: {
+    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  weatherSubtitle: {
+    textAlign: 'center',
+    fontSize: 16,
+    fontStyle: 'italic',
+    marginTop: 6,
+  },
+  weatherContainer: {
+    marginBottom: 10,
+  },
+  displayNone: {
+    display: 'none',
   },
 });

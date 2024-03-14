@@ -9,7 +9,6 @@ import { ActionButton } from '../../commonComponents/ActionButton';
 import { isEmpty, toNumber } from 'lodash';
 import { Dispatch, RootState } from '../../model/store';
 import { useDispatch, useSelector } from 'react-redux';
-import LocationHelper, { Location } from '../../utils/LocationHelper';
 import { Switch } from '@rneui/base';
 import { IntervalNotifcation } from '../../utils/Notification';
 import { extractDigits } from '../../utils/helperFunctions';
@@ -38,19 +37,9 @@ export const UserScreen = () => {
   const [activityLevel, setActivityLevel] = useState<any>(
     ActivityLevels[0].value,
   );
-  const [location, setLocation] = useState<Location | undefined>();
 
-  const getLocation = async () => {
-    try {
-      const locations = await new LocationHelper().getCurrentLocation();
-      setLocation(locations);
-    } catch (e) {
-      console.log('Error retrieving location', e);
-    }
-  };
   useEffect(() => {
     dispatch.user.getUserData();
-    getLocation();
   }, [dispatch.user]);
 
   useEffect(() => {
@@ -58,12 +47,6 @@ export const UserScreen = () => {
     setWeight(user?.weight.toString() || '');
     setActivityLevel(user?.activityLevel || ActivityLevels[0].value);
   }, [user]);
-
-  useEffect(() => {
-    if (location) {
-      // dispatch.user.getCurrentLocationWeather(location);
-    }
-  }, [dispatch.user, location]);
 
   const intervalNotification = new IntervalNotifcation(15);
   const [reminder, setReminder] = useState(reminderStatus);
