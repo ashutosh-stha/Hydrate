@@ -36,6 +36,7 @@ export const authentication = createModel<RootModel>()({
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
           dispatch.authentication.setIsLoggedIn(true);
+          dispatch.user.getUserData();
         } else {
           dispatch.authentication.setIsLoggedIn(false);
         }
@@ -65,7 +66,6 @@ export const authentication = createModel<RootModel>()({
       try {
         await firebase.auth().signInWithEmailAndPassword(email, password);
       } catch (error: any) {
-        console.log('error', error.code);
         dispatch.authentication.setInvalidCredentialsMessage(
           'Invalid credentials',
         );
@@ -76,7 +76,7 @@ export const authentication = createModel<RootModel>()({
         await firebase.auth().signOut();
         dispatch.user.reset();
         await AsyncStorage.clear();
-        new IntervalNotifcation(2).cancelNotification();
+        dispatch.notifications.cancelNotificationReminder();
       } catch (e: any) {
         console.log('Error on logout', e);
       }

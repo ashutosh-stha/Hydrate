@@ -39,24 +39,18 @@ export const UserScreen = () => {
   );
 
   useEffect(() => {
-    dispatch.user.getUserData();
-  }, [dispatch.user]);
-
-  useEffect(() => {
     setAge(user?.age.toString() || '');
     setWeight(user?.weight.toString() || '');
     setActivityLevel(user?.activityLevel || ActivityLevels[0].value);
   }, [user]);
 
-  const intervalNotification = new IntervalNotifcation(15);
   const [reminder, setReminder] = useState(reminderStatus);
   const onSwitchChange = (value: boolean) => {
     if (value) {
-      intervalNotification.scheduleNotification();
+      dispatch.notifications.setIntervalNotificationReminder();
     } else {
-      intervalNotification.cancelNotification();
+      dispatch.notifications.cancelNotificationReminder();
     }
-    dispatch.notifications.setNotificationReminder(value);
     setReminder(value);
   };
 

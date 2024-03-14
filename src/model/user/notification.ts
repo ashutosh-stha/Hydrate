@@ -1,6 +1,7 @@
 import { createModel } from '@rematch/core';
 import { RootModel } from '../models';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { IntervalNotifcation } from '../../utils/Notification';
 
 interface NofifcationsState {
   notificationReminder: boolean;
@@ -9,6 +10,8 @@ interface NofifcationsState {
 const initialState: NofifcationsState = {
   notificationReminder: false,
 };
+
+const intervalNotification = new IntervalNotifcation(2);
 
 export const notifications = createModel<RootModel>()({
   state: initialState,
@@ -27,9 +30,19 @@ export const notifications = createModel<RootModel>()({
       }
     },
 
-    async setNotificationReminder(payload: boolean) {
+    async setIntervalNotificationReminder() {
       try {
-        await AsyncStorage.setItem('notification-reminder', `${payload}`);
+        await intervalNotification.scheduleNotification();
+        await AsyncStorage.setItem('notification-reminder', 'true');
+      } catch (e) {
+        console.error('Problem setting up reminder', e);
+      }
+    },
+
+    async cancelNotificationReminder() {
+      try {
+        await intervalNotification.cancelNotification();
+        await AsyncStorage.setItem('notification-reminder', 'false');
       } catch (e) {
         console.error('Problem setting up reminder', e);
       }

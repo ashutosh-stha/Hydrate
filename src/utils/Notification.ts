@@ -13,11 +13,10 @@ export class IntervalNotifcation {
   }
 
   async scheduleNotification() {
-    console.log(this.hour);
     const trigger: IntervalTrigger = {
       type: TriggerType.INTERVAL,
       interval: this.hour,
-      timeUnit: TimeUnit.MINUTES,
+      timeUnit: TimeUnit.HOURS,
     };
 
     const channelId = await notifee.createChannel({

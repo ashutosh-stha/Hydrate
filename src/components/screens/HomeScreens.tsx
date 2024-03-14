@@ -56,7 +56,6 @@ export const HomeScreen = () => {
 
   useEffect(() => {
     dispatch.user.resetForNewDay();
-    dispatch.user.getUserData();
     getLocation();
   }, [dispatch.user]);
 

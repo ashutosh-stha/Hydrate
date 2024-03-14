@@ -4,7 +4,6 @@ import { BOTTOM_TAB_NAVIGATOR, LOGIN_SCREEN } from '../constants/Routes';
 import { BottomTabNavigator } from '../../components/bottomNavigator/BottomNavigator';
 import { LoginScreen } from '../../components/screens/LoginScreen';
 import { useSelector } from 'react-redux';
-import { RootModel } from '../../model/models';
 import { RootState } from '../../model/store';
 
 const MainStack = createNativeStackNavigator();
