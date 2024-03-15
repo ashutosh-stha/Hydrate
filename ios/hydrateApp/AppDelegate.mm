@@ -1,5 +1,6 @@
 #import "AppDelegate.h"
 #import "Firebase.h"
+#import "RNSplashScreen.h"
 
 #import <React/RCTBundleURLProvider.h>
 
@@ -13,7 +14,13 @@
   self.initialProps = @{};
   [FIRApp configure];
 
-  return [super application:application didFinishLaunchingWithOptions:launchOptions];
+  BOOL ret = [super application:application didFinishLaunchingWithOptions:launchOptions];
+
+   if (ret == YES) { 
+    [RNSplashScreen show];
+  }
+
+  return ret;
 }
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
